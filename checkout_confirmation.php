@@ -42,6 +42,15 @@
   if (isset($_POST['comments']) && tep_not_null($_POST['comments'])) {
     $comments = tep_db_prepare_input($_POST['comments']);
   }
+  
+  if (isset($cartcomments) && $cartcomments != '') {
+  if (isset($comments) && $comments != '') {
+  $comments = $comments . "\n";    
+  } else {
+  $comments = '';    
+  }
+  $comments .= $cartcomments;   
+  }
 
 // load the selected payment module
   require('includes/classes/payment.php');
@@ -89,216 +98,31 @@
 
   require('includes/template_top.php');
 ?>
-
-<div class="page-header">
-  <h1><?php echo HEADING_TITLE; ?></h1>
-</div>
-
 <?php
-  if ($messageStack->size('checkout_confirmation') > 0) {
-    echo $messageStack->output('checkout_confirmation');
-  }
+
 
   if (isset($$payment->form_action_url)) {
     $form_action_url = $$payment->form_action_url;
   } else {
     $form_action_url = tep_href_link('checkout_process.php', '', 'SSL');
   }
-  
-  echo tep_draw_form('checkout_confirmation', $form_action_url, 'post');
-?>
-
-<div class="contentContainer">
-  <div class="contentText">
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><?php echo '<strong>' . HEADING_PRODUCTS . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('shopping_cart.php'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></div>
-      <div class="panel-body">
-    <table width="100%" class="table-hover order_confirmation">
-     <tbody>
-
-<?php
-  for ($i=0, $n=sizeof($order->products); $i<$n; $i++) {
-    echo '          <tr>' . "\n" .
-         '            <td align="right" valign="top" width="30">' . $order->products[$i]['qty'] . '&nbsp;x&nbsp;</td>' . "\n" .
-         '            <td valign="top">' . $order->products[$i]['name'];
-
-    if (STOCK_CHECK == 'true') {
-      echo tep_check_stock($order->products[$i]['id'], $order->products[$i]['qty']);
-    }
-
-    if ( (isset($order->products[$i]['attributes'])) && (sizeof($order->products[$i]['attributes']) > 0) ) {
-      for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
-        echo '<br /><nobr><small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'] . '</i></small></nobr>';
-      }
-    }
-
-    echo '</td>' . "\n";
-
-    if (sizeof($order->info['tax_groups']) > 1) echo '            <td valign="top" align="right">' . tep_display_tax_value($order->products[$i]['tax']) . '%</td>' . "\n";
-
-    echo '            <td align="right" valign="top">' . $currencies->display_price($order->products[$i]['final_price'], $order->products[$i]['tax'], $order->products[$i]['qty']) . '</td>' . "\n" .
-         '          </tr>' . "\n";
-  }
-?>
-
-
-        </tbody>
-      </table>
-      <hr>
-      <table width="100%" class="pull-right">
-
-<?php
-  if (MODULE_ORDER_TOTAL_INSTALLED) {
-    echo $order_total_modules->output();
-  }
-?>
-
-        </table>
-            </div>
-    </div>
 
 
 
-  </div>
-
-  <div class="clearfix"></div>
-
-  <div class="row">
-    <?php
-    if ($sendto != false) {
-      ?>
-      <div class="col-sm-4">
-        <div class="panel panel-info">
-          <div class="panel-heading"><?php echo '<strong>' . HEADING_DELIVERY_ADDRESS . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('checkout_shipping_address.php', '', 'SSL'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></div>
-          <div class="panel-body">
-            <?php echo tep_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?>
-          </div>
-        </div>
-      </div>
-      <?php
-    }
-    ?>
-    <div class="col-sm-4">
-      <div class="panel panel-warning">
-        <div class="panel-heading"><?php echo '<strong>' . HEADING_BILLING_ADDRESS . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('checkout_payment_address.php', '', 'SSL'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></div>
-        <div class="panel-body">
-          <?php echo tep_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br />'); ?>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <?php
-      if ($order->info['shipping_method']) {
-        ?>
-        <div class="panel panel-info">
-          <div class="panel-heading"><?php echo '<strong>' . HEADING_SHIPPING_METHOD . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('checkout_shipping.php', '', 'SSL'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></div>
-          <div class="panel-body">
-            <?php echo $order->info['shipping_method']; ?>
-          </div>
-        </div>
-        <?php
-      }
-      ?>
-      <div class="panel panel-warning">
-        <div class="panel-heading"><?php echo '<strong>' . HEADING_PAYMENT_METHOD . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('checkout_payment.php', '', 'SSL'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></div>
-        <div class="panel-body">
-          <?php echo $order->info['payment_method']; ?>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-
-
-<?php
+  echo tep_draw_form('checkout_confirmation', $form_action_url, 'post', 'id="orderconfirm"'); 
   if (is_array($payment_modules->modules)) {
-    if ($confirmation = $payment_modules->confirmation()) {
-?>
-  <hr>
-
-  <h2><?php echo HEADING_PAYMENT_INFORMATION; ?></h2>
-
-  <div class="contentText row">
-<?php
-    if (tep_not_null($confirmation['title'])) {
-      echo '<div class="col-sm-6">';
-      echo '  <div class="alert alert-danger">';
-      echo $confirmation['title'];
-      echo '  </div>';
-      echo '</div>';
-    }
-?>
-<?php
-      if (isset($confirmation['fields'])) {
-        echo '<div class="col-sm-6">';
-        echo '  <div class="alert alert-info">';
-        $fields = '';
-        for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) {
-          $fields .= $confirmation['fields'][$i]['title'] . ' ' . $confirmation['fields'][$i]['field'] . '<br>';
-        }
-        if (strlen($fields) > 4) echo substr($fields,0,-4);
-        echo '  </div>';
-        echo '</div>';
-      }
-?>
-  </div>
-  <div class="clearfix"></div>
-
-<?php
-    }
+    echo $payment_modules->process_button();
   }
 
-  if (tep_not_null($order->info['comments'])) {
+
+echo tep_draw_button(IMAGE_BUTTON_CONFIRM_ORDER, 'fa fa-ok', null, 'primary', null, 'btn-success');
 ?>
-  <hr>
-
-  <h2><?php echo '<strong>' . HEADING_ORDER_COMMENTS . '</strong>' . tep_draw_button(TEXT_EDIT, 'fa fa-edit', tep_href_link('checkout_payment.php', '', 'SSL'), NULL, NULL, 'pull-right btn-info btn-xs' ); ?></h2>
-
-  <blockquote>
-    <?php echo nl2br(tep_output_string_protected($order->info['comments'])) . tep_draw_hidden_field('comments', $order->info['comments']); ?>
-  </blockquote>
-
-<?php
-  }
-?>
-
-  <div class="buttonSet">
-    <div class="text-right">
-      <?php
-      if (is_array($payment_modules->modules)) {
-        echo $payment_modules->process_button();
-      }
-      echo tep_draw_button(IMAGE_BUTTON_CONFIRM_ORDER, 'fa fa-ok', null, 'primary', null, 'btn-success');
-      ?>
-    </div>
-  </div>
-
-  <div class="clearfix"></div>
-
-  <div class="contentText">
-    <div class="stepwizard">
-      <div class="stepwizard-row">
-        <div class="stepwizard-step">
-          <a href="<?php echo tep_href_link('checkout_shipping.php', '', 'SSL'); ?>"><button type="button" class="btn btn-default btn-circle">1</button></a>
-          <p><a href="<?php echo tep_href_link('checkout_shipping.php', '', 'SSL'); ?>"><?php echo CHECKOUT_BAR_DELIVERY; ?></a></p>
-        </div>
-        <div class="stepwizard-step">
-          <a href="<?php echo tep_href_link('checkout_payment.php', '', 'SSL'); ?>"><button type="button" class="btn btn-default btn-circle">2</button></a>
-          <p><a href="<?php echo tep_href_link('checkout_payment.php', '', 'SSL'); ?>"><?php echo CHECKOUT_BAR_PAYMENT; ?></a></p>
-        </div>
-        <div class="stepwizard-step">
-          <button type="button" class="btn btn-primary btn-circle">3</button>
-          <p><?php echo CHECKOUT_BAR_CONFIRMATION; ?></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
 </form>
+<script>
+$(document).ready(function() {
+$('#orderconfirm').submit();
+});
+</script>
 
 <?php
   require('includes/template_bottom.php');

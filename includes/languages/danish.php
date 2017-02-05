@@ -208,6 +208,7 @@ define('IMAGE_BUTTON_UPDATE', 'Opdatér');
 define('IMAGE_BUTTON_UPDATE_CART', 'Opdatér indkøbskurv');
 define('IMAGE_BUTTON_WRITE_REVIEW', 'Skriv anmeldelse');
 //define('IMAGE_BUTTON_REQUEST', 'Anmodning');
+define('IMAGE_BACK_CATEGORY', 'Tilbage til Varegrupper');
 
 define('SMALL_IMAGE_BUTTON_DELETE', 'Slet');
 define('SMALL_IMAGE_BUTTON_EDIT', 'Ret');

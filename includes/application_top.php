@@ -64,10 +64,7 @@
   tep_db_connect() or die('Unable to connect to database server!');
 
 // set the application parameters
-  $configuration_query = tep_db_query('select configuration_key as cfgKey, configuration_value as cfgValue from ' . TABLE_CONFIGURATION);
-  while ($configuration = tep_db_fetch_array($configuration_query)) {
-    define($configuration['cfgKey'], $configuration['cfgValue']);
-  }
+  require ('includes/configuration_pos.php');
 
 // if gzip_compression is enabled, start to buffer the output
   if ( (GZIP_COMPRESSION == 'true') && ($ext_zlib_loaded = extension_loaded('zlib')) && !headers_sent() ) {
@@ -538,4 +535,17 @@
       $model = tep_db_fetch_array($model_query);
       $breadcrumb->add($model['products_model'], tep_href_link('product_info.php', 'cPath=' . $cPath . '&products_id=' . $_GET['products_id']));
     }
+  }
+  if(isset($_POST['cartcomments'])) {
+    $cartcomments = tep_db_prepare_input($_POST['cartcomments']); 
+ if (!tep_session_is_registered('cartcomments')) {
+    tep_session_register('cartcomments');
+  }   
+}
+
+//login
+
+if (!tep_session_is_registered('customer_id') && basename($_SERVER['SCRIPT_FILENAME']) != 'login.php' && basename($_SERVER['SCRIPT_FILENAME']) != 'create_account.php') {
+    $navigation->set_snapshot();
+    tep_redirect(tep_href_link('login.php', '', 'SSL'));
   }

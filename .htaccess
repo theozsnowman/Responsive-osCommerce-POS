@@ -61,3 +61,10 @@ ExpiresDefault "access plus 2 days"
 ## EXPIRES CACHING ##
 
 #AddType application/x-httpd-php-old .php
+
+##### OSCOMMERCE ADMIN PROTECTION - BEGIN #####
+AuthType Basic
+AuthName "osCommerce Online Merchant POS System"
+AuthUserFile xxxxxxxxxxx/.htpasswd_oscommerce
+Require valid-user
+##### OSCOMMERCE ADMIN PROTECTION - END #####

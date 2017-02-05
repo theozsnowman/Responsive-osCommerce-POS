@@ -49,6 +49,12 @@
   }
 ?>
 
+<?php
+if (tep_not_null($category['categories_description'])) {
+  echo '<div class="well well-sm">' . $category['categories_description'] . '</div>';
+}  
+?>
+
 <div class="contentContainer">
   <div class="row">
     <?php echo $oscTemplate->getContent('index_nested'); ?>

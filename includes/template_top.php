@@ -35,6 +35,7 @@
 
 <link href="custom.css" rel="stylesheet">
 <link href="user.css" rel="stylesheet">
+<link href="catcolors.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
    <script src="ext/js/html5shiv.js"></script>
@@ -43,6 +44,9 @@
 <![endif]-->
  
 <script src="ext/jquery/jquery-3.1.0.min.js"></script>
+<?php include('includes/categories_js.php'); ?>
+<!-- font awesome -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <?php echo $oscTemplate->getBlocks('header_tags'); ?>
 </head>
@@ -55,4 +59,4 @@
 
       <?php require('includes/header.php'); ?>
 
-      <div id="bodyContent" class="col-md-<?php echo $oscTemplate->getGridContentWidth(); ?> <?php echo ($oscTemplate->hasBlocks('boxes_column_left') ? 'col-md-push-' . $oscTemplate->getGridColumnWidth() : ''); ?>">
+      <div id="bodyContent" class="col-md-<?php echo (!tep_session_is_registered('customer_id') ? '12' : $oscTemplate->getGridContentWidth() . ($oscTemplate->hasBlocks('boxes_column_left') ? 'col-md-push-' . $oscTemplate->getGridColumnWidth() : '')); ?>">

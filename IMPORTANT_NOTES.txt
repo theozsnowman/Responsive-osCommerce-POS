@@ -1,3 +1,78 @@
+Extra changes for POS system (REMOVE ADSENSE BOX incl language)
+
+User.css - Line 6-14 added
+
+The POS system do have a comment box out in the right side that allows staff to enter comments as the customer says them. The file \savecomment.php is one file for that system
+
+\product_info.php line 100-109 added
+
+\logoff.php line 44-46 added
+
+\login.php line line 62-66 commented out. Link in line 68 changed to a category page instead of the normal landing page.
+
+\index.php Line 52-56 added
+
+\create_account.php Line 390-408 zip code and city changed place. Denmark writes post code first and city last.
+
+\checkout_success.php Line 41 added
+
+\checkout_process.php Line 246 link in email changed as not to give out pos site address. Line 288&289+297 added. Line 114?????
+
+\checkout_confirmation.php Line 46-53 added
+
+Line 101 Added
+Line 102-110 Removed
+Line 118 , 'id="orderconfirm"' added before last )
+Line 122-226 Removed
+Line 228 Added
+Line 229-251 Removed
+Line 253-284 Removed
+Line 287-311 Removed
+Line 314-318 Added
+
+\categories.php file added - This list the categories in a pos style for fast selection on touch screen
+
+\catcolors.css file added - Here colour for each category can be defined
+
+.htaccess - last 6 lines added to block unwanted access. uses the next file for user&pass storage
+
+.htpasswd_oscommerce
+
+\includes\template_top.php Line 38 added. Line 47-49 added. Line 62 changed
+
+\includes\template_bottom.php. Line 17 added. Line 37 added
+
+\includes\footer.php. Line 21 and 28 each echo statement commented out
+
+\filenames.php  >>>>>>>>>>   define('FILENAME_CATEGORIES', 'categories.php');
+
+\configuration_pos.php File added
+
+\includes\categories_js.php file added
+
+\includes\application_top.php Line 67 changed. Line 68-70 removed. Last 11 lines before the final } added
+
+\includes\modules\rewardpoints\rewardpoints.php file added
+
+\includes\modules\content\login\templates\login_phone.php Line 17 echo statement commented out
+
+\includes\modules\content\login\templates\create_account_link.php Line 1 echo statement commented out
+
+\includes\modules\boxes\bm_shopping_cart.php , $cartcomments added to line 34. 
+
+\includes\modules\boxes\templates\shopping_cart.php Last 20 lines added
+
+includes\modules\boxes\templates\information.php 2 first lines with link added. link with privacy removed. last link with phone added
+
+\includes\languages\danish.php line 211 added
+
+\includes\languages\danish\modules\boxes\bm_shopping_cart.php line 18 added
+
+\includes\classes\order.php Line 139 $HTTP_POST_VARS, added at beginning
+
+Whole admin folder removed as its not needed. All admin tasks are done from main site admin
+
+
 forked from https://github.com/BrockleyJohn/Responsive-osCommerce/tree/php7_compatibility_01
 
 changes:

@@ -14,6 +14,7 @@
       </div> <!-- bodyContent //-->
 
 <?php
+if (tep_session_is_registered('customer_id')) {
   if ($oscTemplate->hasBlocks('boxes_column_left')) {
 ?>
 
@@ -33,6 +34,7 @@
 
 <?php
   }
+}
 ?>
 
     </div> <!-- row -->

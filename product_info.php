@@ -97,6 +97,16 @@
       $pi_total = tep_db_num_rows($pi_query);
 
       if ($pi_total > 0) {
+$pi_sub = $pi_total-1;
+
+        while ($pi_sub > 5) {
+          $photoset_layout .= 5;
+          $pi_sub = $pi_sub-5;
+        }
+
+        if ($pi_sub > 0) {
+          $photoset_layout .= ($pi_total > 5) ? 5 : $pi_sub;
+        }
 ?>
 
     <div class="piGal pull-right" data-imgcount="<?php echo $photoset_layout; ?>">

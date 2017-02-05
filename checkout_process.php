@@ -243,7 +243,7 @@
   $email_order = STORE_NAME . "\n" . 
                  EMAIL_SEPARATOR . "\n" . 
                  EMAIL_TEXT_ORDER_NUMBER . ' ' . $insert_id . "\n" .
-                 EMAIL_TEXT_INVOICE_URL . ' ' . tep_href_link('account_history_info.php', 'order_id=' . $insert_id, 'SSL', false) . "\n" .
+                 EMAIL_TEXT_INVOICE_URL . ' ' . 'http://example.com/account_history_info.php?'. 'order_id=' . $insert_id, 'SSL', false) . "\n" .
                  EMAIL_TEXT_DATE_ORDERED . ' ' . strftime(DATE_FORMAT_LONG) . "\n\n";
   if ($order->info['comments']) {
     $email_order .= tep_db_output($order->info['comments']) . "\n\n";
@@ -285,12 +285,16 @@
 
   $cart->reset(true);
 
+  //reward points
+  require(DIR_WS_MODULES . 'rewardpoints/rewardpoints.php');
+
 // unregister session variables used during checkout
   tep_session_unregister('sendto');
   tep_session_unregister('billto');
   tep_session_unregister('shipping');
   tep_session_unregister('payment');
   tep_session_unregister('comments');
+  tep_session_unregister('cartcomments');
 
   tep_redirect(tep_href_link('checkout_success.php', '', 'SSL'));
 

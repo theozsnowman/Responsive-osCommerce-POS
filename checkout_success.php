@@ -38,6 +38,7 @@
 
   $breadcrumb->add(NAVBAR_TITLE_1);
   $breadcrumb->add(NAVBAR_TITLE_2);
+  tep_session_unregister('customer_id');
 
   require('includes/template_top.php');
 ?>

@@ -59,13 +59,13 @@
 // restore cart contents
     $cart->restore_contents();
 
-    if (sizeof($navigation->snapshot) > 0) {
-      $origin_href = tep_href_link($navigation->snapshot['page'], tep_array_to_string($navigation->snapshot['get'], array(tep_session_name())), $navigation->snapshot['mode']);
-      $navigation->clear_snapshot();
-      tep_redirect($origin_href);
-    }
+//    if (sizeof($navigation->snapshot) > 0) {
+//      $origin_href = tep_href_link($navigation->snapshot['page'], tep_array_to_string($navigation->snapshot['get'], array(tep_session_name())), $navigation->snapshot['mode']);
+//      $navigation->clear_snapshot();
+//      tep_redirect($origin_href);
+//    }
 
-    tep_redirect(tep_href_link('index.php'));
+    tep_redirect(tep_href_link('categories.php'));
   }
 
   require('includes/languages/' . $language . '/login.php');

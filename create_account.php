@@ -387,20 +387,20 @@
 <?php
   }
 ?>
+ <div class="form-group has-feedback">
+      <label for="inputZip" class="control-label col-sm-3"><?php echo ENTRY_POST_CODE; ?></label>
+      <div class="col-sm-9">
+        <?php
+        echo tep_draw_input_field('postcode', NULL, 'required aria-required="true" id="inputZip" placeholder="' . ENTRY_POST_CODE_TEXT . '"');
+        echo FORM_REQUIRED_INPUT;
+        ?>
+     </div>
+    </div>
     <div class="form-group has-feedback">
       <label for="inputCity" class="control-label col-sm-3"><?php echo ENTRY_CITY; ?></label>
       <div class="col-sm-9">
         <?php
         echo tep_draw_input_field('city', NULL, 'required aria-required="true" id="inputCity" placeholder="' . ENTRY_CITY_TEXT. '"');
-        echo FORM_REQUIRED_INPUT;
-        ?>
-      </div>
-    </div>
-    <div class="form-group has-feedback">
-      <label for="inputZip" class="control-label col-sm-3"><?php echo ENTRY_POST_CODE; ?></label>
-      <div class="col-sm-9">
-        <?php
-        echo tep_draw_input_field('postcode', NULL, 'required aria-required="true" id="inputZip" placeholder="' . ENTRY_POST_CODE_TEXT . '"');
         echo FORM_REQUIRED_INPUT;
         ?>
      </div>

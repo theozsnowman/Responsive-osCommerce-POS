@@ -14,4 +14,5 @@
   define('MODULE_BOXES_SHOPPING_CART_DESCRIPTION', 'Vis indkøbskurv indhold');
   define('MODULE_BOXES_SHOPPING_CART_BOX_TITLE', 'Indkøbskurv');
   define('MODULE_BOXES_SHOPPING_CART_BOX_CART_EMPTY', '0 Varer');
+  define('MODULE_BOXES_SHOPPING_CART_BOX_COMMENT', 'Bem�rkninger');
 ?>

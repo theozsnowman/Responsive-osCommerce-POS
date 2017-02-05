@@ -31,7 +31,7 @@
     }
 
     function execute() {
-      global $cart, $new_products_id_in_cart, $currencies, $oscTemplate;
+      global $cart, $new_products_id_in_cart, $currencies, $oscTemplate, $cartcomments;
 
       $cart_contents_string = '';
 
