@@ -67,7 +67,7 @@
       }
 
       ob_start();
-      include(DIR_WS_MODULES . 'content/' . $this->group . '/templates/login_phone.php');
+      include('includes/modules/content/' . $this->group . '/templates/login_phone.php');
       $template = ob_get_clean();
 
       $oscTemplate->addContent($template, $this->group);
